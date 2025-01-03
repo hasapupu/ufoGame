@@ -3,6 +3,8 @@ class_name gameManager
 
 @onready var gameLoop: PackedScene = preload("res://mainScene.tscn")
 @onready var menu: PackedScene = preload("res://mainMenu.tscn")
+@onready var over: PackedScene = preload("res://gameOver.tscn")
+
 var currentScene: Node
 
 func _ready():

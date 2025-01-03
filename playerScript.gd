@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 @export var speed = 250
+@onready var gm: gameManager = get_tree().get_root().get_node("Node")
 
 
 func getInput():
@@ -28,5 +29,5 @@ func _physics_process(delta):
         var collision = get_slide_collision(i)
         var collider = collision.get_collider()
         if collider.is_in_group("damaging"):
-            print("hit")
+            gm.loadPremadeScene(gm.over)
 

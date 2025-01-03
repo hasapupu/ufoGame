@@ -1,0 +1,75 @@
+[gd_scene load_steps=3 format=3 uid="uid://b77okkogoctd4"]
+
+[ext_resource type="Script" path="res://quitButton.gd" id="1_cmul2"]
+[ext_resource type="Script" path="res://mainMenu.gd" id="1_l2r6o"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_l2r6o")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+z_index = 6
+layout_mode = 0
+offset_left = 8.0
+offset_top = 1.0
+offset_right = 486.0
+offset_bottom = 151.0
+theme_override_font_sizes/normal_font_size = 42
+text = "Jet fuel can't melt steel beams, but UFOs can."
+autowrap_mode = 1
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 479.0
+offset_bottom = 270.0
+color = Color(0.164706, 0.364706, 0.52549, 1)
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 139.0
+offset_top = 132.0
+offset_right = 318.0
+offset_bottom = 178.0
+text = "Play"
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 152.0
+offset_top = 185.0
+offset_right = 300.0
+offset_bottom = 221.0
+text = "Controls"
+
+[node name="Button3" type="Button" parent="."]
+layout_mode = 0
+offset_left = 177.0
+offset_top = 230.0
+offset_right = 278.0
+offset_bottom = 261.0
+text = "Quit"
+script = ExtResource("1_cmul2")
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 307.0
+offset_top = 254.0
+offset_right = 479.0
+offset_bottom = 270.0
+theme_override_font_sizes/normal_font_size = 10
+text = "Music and SFX: Canoi (OnitonTTV)"
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_top = 254.0
+offset_right = 172.0
+offset_bottom = 270.0
+theme_override_font_sizes/normal_font_size = 10
+text = "Art & Programming: cornL"
+
+[connection signal="button_down" from="Button" to="." method="_on_button_button_down"]
+[connection signal="button_down" from="Button3" to="Button3" method="_on_button_down"]

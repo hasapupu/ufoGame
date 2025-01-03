@@ -1,0 +1,107 @@
+[gd_scene load_steps=9 format=3 uid="uid://hgr466tcew13"]
+
+[ext_resource type="Script" path="res://playerScript.gd" id="1_el2s4"]
+[ext_resource type="Texture2D" uid="uid://dp3j684amacji" path="res://sprites/mainatlas.png" id="1_th68h"]
+[ext_resource type="Script" path="res://obstacleSpawner.gd" id="3_h0pb6"]
+
+[sub_resource type="Animation" id="Animation_lqusl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Rect2(181, 30, 90, 34)]
+}
+
+[sub_resource type="Animation" id="Animation_4iaex"]
+resource_name = "mainAnim"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Rect2(181, 30, 90, 34), Rect2(277, 30, 89, 34)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_eya11"]
+_data = {
+"RESET": SubResource("Animation_lqusl"),
+"mainAnim": SubResource("Animation_4iaex")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_82gg4"]
+size = Vector2(24, 7)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_iin5l"]
+particle_flag_disable_z = true
+emission_shape = 2
+emission_sphere_radius = 128.0
+angle_max = 109.7
+direction = Vector3(0, -1, 0)
+spread = 0.0
+initial_velocity_min = 1000.0
+initial_velocity_max = 1000.0
+gravity = Vector3(0, 0, 0)
+
+[node name="Node" type="Node"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="Camera2D"]
+offset_left = -274.0
+offset_top = -160.0
+offset_right = 299.0
+offset_bottom = 165.0
+color = Color(0.165039, 0.365026, 0.526845, 1)
+
+[node name="player" type="CharacterBody2D" parent="."]
+position = Vector2(0, -100)
+script = ExtResource("1_el2s4")
+
+[node name="Sprite2D" type="Sprite2D" parent="player"]
+texture = ExtResource("1_th68h")
+region_enabled = true
+region_rect = Rect2(181, 30, 90, 34)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="player/Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_eya11")
+}
+autoplay = "mainAnim"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_82gg4")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(20, -63)
+scale = Vector2(3.335, 3.335)
+amount = 30
+process_material = SubResource("ParticleProcessMaterial_iin5l")
+lifetime = 0.3
+speed_scale = 0.64
+fixed_fps = 60
+draw_order = 0
+trail_enabled = true
+trail_lifetime = 0.11
+
+[node name="obstacleSpawner" type="Node2D" parent="."]
+script = ExtResource("3_h0pb6")
+
+[node name="Timer" type="Timer" parent="obstacleSpawner"]
+one_shot = true
+
+[connection signal="timeout" from="obstacleSpawner/Timer" to="obstacleSpawner" method="_timeout"]

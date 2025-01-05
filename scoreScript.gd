@@ -1,4 +1,4 @@
-extends RichTextLabel
+class_name scoreScript extends RichTextLabel
 
 @export var score: int = 0
 var currentText := "Score: "

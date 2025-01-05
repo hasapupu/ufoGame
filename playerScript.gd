@@ -8,6 +8,7 @@ class_name playerScript extends CharacterBody2D
 @onready var pipeSwing: PackedScene = preload("res://swing.tscn")
 var currentWeapon = wieldedWeapon.NONE
 var enumDict = {wieldedWeapon.PIPE: pipeShoot, wieldedWeapon.SHOTGUN: shotgunShoot,wieldedWeapon.MACHINEGUN: machineShoot}
+@onready var anim: AnimationPlayer = get_node("Sprite2D/AnimationPlayer")
 
 enum wieldedWeapon{
     PIPE = 0,
@@ -52,7 +53,6 @@ func _process(delta):
         elif currentWeapon == wieldedWeapon.MACHINEGUN:
             machineShoot()
         elif currentWeapon == wieldedWeapon.PIPE:
-            
             pipeShoot()
         
 func shotgunShoot():
@@ -62,9 +62,10 @@ func shotgunShoot():
         newBullet.append(bullet.instantiate() as CharacterBody2D)
     
     for i in range(3):
-        newBullet[i].position = Vector2(position.x,position.y)
+        newBullet[i].position = Vector2(position.x - 12 ,position.y + 23)
         newBullet[i].velocity = (Vector2(0,1)).normalized().rotated(20 * (i - 1)) * 550
         get_parent().add_child(newBullet[i])
+    anim.play("mainAnim")
     
 
 func pipeShoot():
@@ -72,8 +73,9 @@ func pipeShoot():
     var swingInst: Node2D = pipeSwing.instantiate()
     add_child(swingInst)
     print(swingInst)
-    await get_tree().create_timer(0.3).timeout
+    await get_tree().create_timer(0.1).timeout
     swingInst.queue_free()
+    anim.play("mainAnim")
 
 func machineShoot():
     currentWeapon = wieldedWeapon.NONE
@@ -83,10 +85,11 @@ func machineShoot():
     
     for i in range(12):
         print(i)
-        newBullet[i].position = Vector2(position.x,position.y)
+        newBullet[i].position = Vector2(position.x - 12 ,position.y + 23)
         newBullet[i].velocity = Vector2(0,1) * 550
         get_parent().add_child(newBullet[i])
         await get_tree().create_timer(0.1).timeout
+    anim.play("mainAnim")
     
 
 func currentShoot():

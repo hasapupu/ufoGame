@@ -15,9 +15,15 @@ func shoot():
 		await get_tree().create_timer(0.2).timeout
 
 func _on_tree_exiting():
+	increaseScore()
+	var expInst: GPUParticles2D = explosion.instantiate()
+	expInst.emitting = true
+	expInst.position = position
+	get_parent().add_child.call_deferred(expInst)
 	print(pickUp)
 	var pickinst: pickup = pickUp.instantiate()
 	pickinst.value = 2
+	pickinst.clipToPlay = "machineGun"
 	pickinst.position = position
 	print(pickinst)
 	var pleasework = pickinst

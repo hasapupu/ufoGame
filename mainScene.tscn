@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://hgr466tcew13"]
+[gd_scene load_steps=15 format=3 uid="uid://hgr466tcew13"]
 
 [ext_resource type="Script" path="res://playerScript.gd" id="1_el2s4"]
 [ext_resource type="Texture2D" uid="uid://dp3j684amacji" path="res://sprites/mainatlas.png" id="1_th68h"]
@@ -39,10 +39,64 @@ tracks/0/keys = {
 "values": [Rect2(181, 30, 90, 34), Rect2(277, 30, 89, 34)]
 }
 
+[sub_resource type="Animation" id="Animation_343wl"]
+resource_name = "machineGun"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Rect2(192, 205, 76, 52), Rect2(291, 205, 72, 52)]
+}
+
+[sub_resource type="Animation" id="Animation_mpekj"]
+resource_name = "shotGun"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Rect2(194, 138, 76, 56), Rect2(293, 138, 72, 56)]
+}
+
+[sub_resource type="Animation" id="Animation_at1qe"]
+resource_name = "pipe"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Rect2(178, 88, 92, 39), Rect2(276, 88, 89, 39)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_eya11"]
 _data = {
 "RESET": SubResource("Animation_lqusl"),
-"mainAnim": SubResource("Animation_4iaex")
+"machineGun": SubResource("Animation_343wl"),
+"mainAnim": SubResource("Animation_4iaex"),
+"pipe": SubResource("Animation_at1qe"),
+"shotGun": SubResource("Animation_mpekj")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_82gg4"]
@@ -61,18 +115,7 @@ gravity = Vector3(0, 0, 0)
 
 [node name="Node" type="Node"]
 
-[node name="Camera2D" type="Camera2D" parent="."]
-
-[node name="ColorRect" type="ColorRect" parent="Camera2D"]
-offset_left = -274.0
-offset_top = -160.0
-offset_right = 299.0
-offset_bottom = 165.0
-color = Color(0.165039, 0.365026, 0.526845, 1)
-
-[node name="AudioListener2D" type="AudioListener2D" parent="Camera2D"]
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Camera2D"]
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
 z_index = 6
 offset_left = -240.0
 offset_top = -135.0
@@ -83,10 +126,20 @@ bbcode_enabled = true
 text = "Score: "
 fit_content = true
 script = ExtResource("5_q8uod")
-score = null
 
-[node name="Timer" type="Timer" parent="Camera2D/RichTextLabel"]
+[node name="Timer" type="Timer" parent="RichTextLabel"]
 autostart = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="Camera2D"]
+offset_left = -274.0
+offset_top = -160.0
+offset_right = 299.0
+offset_bottom = 165.0
+color = Color(0.141176, 0.623529, 0.870588, 1)
+
+[node name="AudioListener2D" type="AudioListener2D" parent="Camera2D"]
 
 [node name="player" type="CharacterBody2D" parent="." groups=["player"]]
 position = Vector2(0, -100)
@@ -107,6 +160,9 @@ autoplay = "mainAnim"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player"]
 position = Vector2(0, -0.5)
 shape = SubResource("RectangleShape2D_82gg4")
+
+[node name="Node2D" type="Node2D" parent="player"]
+position = Vector2(-12, 23)
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
 position = Vector2(20, -63)
@@ -133,5 +189,5 @@ autoplay = true
 
 [node name="Area2D" parent="." instance=ExtResource("6_6my22")]
 
-[connection signal="timeout" from="Camera2D/RichTextLabel/Timer" to="Camera2D/RichTextLabel" method="_on_timer_timeout"]
+[connection signal="timeout" from="RichTextLabel/Timer" to="RichTextLabel" method="_on_timer_timeout"]
 [connection signal="timeout" from="obstacleSpawner/Timer" to="obstacleSpawner" method="_timeout"]

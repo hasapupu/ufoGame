@@ -1,4 +1,4 @@
-extends Node2D
+class_name obstacleSpawner extends Node2D
  
 @export var UFO: PackedScene
 @onready var machineGunUfo: PackedScene = preload("res://machineGunUfo.tscn")
@@ -29,7 +29,6 @@ func _timeout():
 	currentUfo.player = player
 	currentUfo.position = Vector2(randf_range(-400,400),300)
 	var angle = currentUfo.get_angle_to(player.position)
-	
 	add_child(currentUfo)
 	currentUfo.velocity = Vector2(player.position - currentUfo.position) / 1.5
 	recursiveSpawn()

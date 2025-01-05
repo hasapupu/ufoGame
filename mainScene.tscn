@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://hgr466tcew13"]
+[gd_scene load_steps=12 format=3 uid="uid://hgr466tcew13"]
 
 [ext_resource type="Script" path="res://playerScript.gd" id="1_el2s4"]
 [ext_resource type="Texture2D" uid="uid://dp3j684amacji" path="res://sprites/mainatlas.png" id="1_th68h"]
 [ext_resource type="Script" path="res://obstacleSpawner.gd" id="3_h0pb6"]
 [ext_resource type="AudioStream" uid="uid://bxkwvb21fdymt" path="res://music/Cosmic Blood wip.wav" id="4_gscqw"]
 [ext_resource type="Script" path="res://scoreScript.gd" id="5_q8uod"]
+[ext_resource type="PackedScene" uid="uid://bk8hbnqishaty" path="res://pipePickUp.tscn" id="6_6my22"]
 
 [sub_resource type="Animation" id="Animation_lqusl"]
 length = 0.001
@@ -129,6 +130,8 @@ one_shot = true
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("4_gscqw")
 autoplay = true
+
+[node name="Area2D" parent="." instance=ExtResource("6_6my22")]
 
 [connection signal="timeout" from="Camera2D/RichTextLabel/Timer" to="Camera2D/RichTextLabel" method="_on_timer_timeout"]
 [connection signal="timeout" from="obstacleSpawner/Timer" to="obstacleSpawner" method="_timeout"]

@@ -5,7 +5,8 @@ class_name playerScript extends CharacterBody2D
 @export var speed = 250
 @onready var gm: gameManager = get_tree().get_root().get_node("Node")
 @onready var bullet: PackedScene = preload("res://playerBullet.tscn")
-var currentWeapon = wieldedWeapon.MACHINEGUN
+@onready var pipeSwing: PackedScene = preload("res://swing.tscn")
+var currentWeapon = wieldedWeapon.NONE
 var enumDict = {wieldedWeapon.PIPE: pipeShoot, wieldedWeapon.SHOTGUN: shotgunShoot,wieldedWeapon.MACHINEGUN: machineShoot}
 
 enum wieldedWeapon{
@@ -50,8 +51,12 @@ func _process(delta):
             shotgunShoot()
         elif currentWeapon == wieldedWeapon.MACHINEGUN:
             machineShoot()
+        elif currentWeapon == wieldedWeapon.PIPE:
+            
+            pipeShoot()
         
 func shotgunShoot():
+    currentWeapon = wieldedWeapon.NONE
     var newBullet = []
     for i in range(3):
         newBullet.append(bullet.instantiate() as CharacterBody2D)
@@ -60,12 +65,18 @@ func shotgunShoot():
         newBullet[i].position = Vector2(position.x,position.y)
         newBullet[i].velocity = (Vector2(0,1)).normalized().rotated(20 * (i - 1)) * 550
         get_parent().add_child(newBullet[i])
-    currentWeapon = wieldedWeapon.NONE
+    
 
 func pipeShoot():
-    pass
+    currentWeapon = wieldedWeapon.NONE
+    var swingInst: Node2D = pipeSwing.instantiate()
+    add_child(swingInst)
+    print(swingInst)
+    await get_tree().create_timer(0.3).timeout
+    swingInst.queue_free()
 
 func machineShoot():
+    currentWeapon = wieldedWeapon.NONE
     var newBullet = []
     for i in range(12):
         newBullet.append(bullet.instantiate() as CharacterBody2D)
@@ -76,7 +87,7 @@ func machineShoot():
         newBullet[i].velocity = Vector2(0,1) * 550
         get_parent().add_child(newBullet[i])
         await get_tree().create_timer(0.1).timeout
-    currentWeapon = wieldedWeapon.NONE
+    
 
 func currentShoot():
     pass

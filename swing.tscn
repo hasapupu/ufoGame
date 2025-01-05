@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkuqyq7wvj3xq"]
+
+[ext_resource type="Script" path="res://swing.gd" id="1_d7sgb"]
+[ext_resource type="Texture2D" uid="uid://dp3j684amacji" path="res://sprites/mainatlas.png" id="2_li5td"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q4mam"]
+size = Vector2(71, 52)
+
+[node name="Node2D" type="Area2D"]
+position = Vector2(2, 35)
+script = ExtResource("1_d7sgb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_q4mam")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 11
+texture = ExtResource("2_li5td")
+region_enabled = true
+region_rect = Rect2(3, 148, 71, 52)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

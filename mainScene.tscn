@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=3 uid="uid://hgr466tcew13"]
+[gd_scene load_steps=11 format=3 uid="uid://hgr466tcew13"]
 
 [ext_resource type="Script" path="res://playerScript.gd" id="1_el2s4"]
 [ext_resource type="Texture2D" uid="uid://dp3j684amacji" path="res://sprites/mainatlas.png" id="1_th68h"]
 [ext_resource type="Script" path="res://obstacleSpawner.gd" id="3_h0pb6"]
 [ext_resource type="AudioStream" uid="uid://bxkwvb21fdymt" path="res://music/Cosmic Blood wip.wav" id="4_gscqw"]
+[ext_resource type="Script" path="res://scoreScript.gd" id="5_q8uod"]
 
 [sub_resource type="Animation" id="Animation_lqusl"]
 length = 0.001
@@ -70,8 +71,25 @@ color = Color(0.165039, 0.365026, 0.526845, 1)
 
 [node name="AudioListener2D" type="AudioListener2D" parent="Camera2D"]
 
-[node name="player" type="CharacterBody2D" parent="."]
+[node name="RichTextLabel" type="RichTextLabel" parent="Camera2D"]
+z_index = 6
+offset_left = -240.0
+offset_top = -135.0
+offset_right = 240.0
+offset_bottom = 135.0
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
+text = "Score: "
+fit_content = true
+script = ExtResource("5_q8uod")
+score = null
+
+[node name="Timer" type="Timer" parent="Camera2D/RichTextLabel"]
+autostart = true
+
+[node name="player" type="CharacterBody2D" parent="." groups=["player"]]
 position = Vector2(0, -100)
+collision_layer = 3855
 script = ExtResource("1_el2s4")
 
 [node name="Sprite2D" type="Sprite2D" parent="player"]
@@ -103,6 +121,7 @@ trail_lifetime = 0.11
 
 [node name="obstacleSpawner" type="Node2D" parent="."]
 script = ExtResource("3_h0pb6")
+timeUntilSpawn = null
 
 [node name="Timer" type="Timer" parent="obstacleSpawner"]
 one_shot = true
@@ -111,4 +130,5 @@ one_shot = true
 stream = ExtResource("4_gscqw")
 autoplay = true
 
+[connection signal="timeout" from="Camera2D/RichTextLabel/Timer" to="Camera2D/RichTextLabel" method="_on_timer_timeout"]
 [connection signal="timeout" from="obstacleSpawner/Timer" to="obstacleSpawner" method="_timeout"]

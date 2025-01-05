@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://1x2dhirwrjx5"]
+
+[ext_resource type="Script" path="res://moveAndSlide.gd" id="1_ab8s6"]
+[ext_resource type="Script" path="res://enemyBullet.gd" id="1_lg4te"]
+[ext_resource type="Texture2D" uid="uid://dp3j684amacji" path="res://sprites/mainatlas.png" id="1_vmcm1"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6m5av"]
+
+[node name="Node2D" type="CharacterBody2D" groups=["damaging"]]
+script = ExtResource("1_ab8s6")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_vmcm1")
+region_enabled = true
+region_rect = Rect2(12, 94, 19, 19)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_6m5av")
+disabled = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(0, -6)
+target_position = Vector2(0, -12)
+script = ExtResource("1_lg4te")

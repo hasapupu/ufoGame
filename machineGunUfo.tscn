@@ -1,20 +1,20 @@
-[gd_scene load_steps=4 format=3 uid="uid://bf3xciw8gy5w5"]
+[gd_scene load_steps=4 format=3 uid="uid://v7og8gmtl3bt"]
 
-[ext_resource type="Script" path="res://shotgunUfo.gd" id="1_5k5yx"]
-[ext_resource type="Texture2D" uid="uid://dp3j684amacji" path="res://sprites/mainatlas.png" id="1_laev8"]
+[ext_resource type="Script" path="res://machineGunUfo.gd" id="1_fit87"]
+[ext_resource type="Texture2D" uid="uid://dp3j684amacji" path="res://sprites/mainatlas.png" id="2_wlv1i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ob6ib"]
 size = Vector2(79, 13)
 
 [node name="ufo" type="CharacterBody2D" groups=["damaging"]]
-script = ExtResource("1_5k5yx")
+script = ExtResource("1_fit87")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 0.5)
 shape = SubResource("RectangleShape2D_ob6ib")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_laev8")
+texture = ExtResource("2_wlv1i")
 region_enabled = true
 region_rect = Rect2(36, 27, 128, 42)
 

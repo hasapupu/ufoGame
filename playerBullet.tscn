@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://dw8onp4uy80u0"]
+
+[ext_resource type="Script" path="res://moveAndSlide.gd" id="1_bnmkx"]
+[ext_resource type="Texture2D" uid="uid://dp3j684amacji" path="res://sprites/mainatlas.png" id="2_so2j2"]
+[ext_resource type="Script" path="res://playerBullet.gd" id="3_gvwvv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6m5av"]
+
+[node name="Node2D" type="CharacterBody2D"]
+script = ExtResource("1_bnmkx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_so2j2")
+region_enabled = true
+region_rect = Rect2(12, 94, 19, 19)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_6m5av")
+disabled = true
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+target_position = Vector2(0, 18)
+script = ExtResource("3_gvwvv")

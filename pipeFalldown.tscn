@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://dqq6tjo8bivwt"]
+
+[ext_resource type="Script" path="res://moveAndSlide.gd" id="1_v23ex"]
+[ext_resource type="PackedScene" uid="uid://bk8hbnqishaty" path="res://pipePickUp.tscn" id="2_xgmlv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_72kf6"]
+
+[node name="Node2D" type="CharacterBody2D"]
+script = ExtResource("1_v23ex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_72kf6")
+disabled = true
+
+[node name="Area2D" parent="." instance=ExtResource("2_xgmlv")]

@@ -5,8 +5,11 @@ class_name obstacleSpawner extends Node2D
 @onready var defUFO: PackedScene = preload("res://defaultUfo.tscn")
 @export var timeUntilSpawn: float = 5
 @onready var timer = get_node("Timer")
+@onready var secTimerr = get_node("Timer2")
 @onready var player: CharacterBody2D = get_parent().get_node("player")
 var rawValues = [0,1,2]
+@export var fallDownObjects: Array[PackedScene]
+
 
 func _ready():
 	UFO = preload("res://ufo.tscn")
@@ -17,7 +20,8 @@ func recursiveSpawn():
 	timer.start()
 
 func _timeout():
-	timeUntilSpawn = timeUntilSpawn - 0.03
+	if timeUntilSpawn > 1:
+		timeUntilSpawn = timeUntilSpawn - 0.03
 	var randNum = rawValues.pick_random()
 	var currentUfo: ufo
 	if randNum == 0:
@@ -32,3 +36,9 @@ func _timeout():
 	add_child(currentUfo)
 	currentUfo.velocity = Vector2(player.position - currentUfo.position) / 1.5
 	recursiveSpawn()
+
+func _timeout_sec():
+	var currentFall: CharacterBody2D = fallDownObjects.pick_random().instantiate()
+	currentFall.position = Vector2(randf_range(-200,200), -150)
+	currentFall.velocity = Vector2(0,1) * 450
+	add_child(currentFall) 

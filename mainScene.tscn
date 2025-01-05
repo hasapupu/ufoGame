@@ -1,11 +1,14 @@
-[gd_scene load_steps=15 format=3 uid="uid://hgr466tcew13"]
+[gd_scene load_steps=18 format=3 uid="uid://hgr466tcew13"]
 
 [ext_resource type="Script" path="res://playerScript.gd" id="1_el2s4"]
 [ext_resource type="Texture2D" uid="uid://dp3j684amacji" path="res://sprites/mainatlas.png" id="1_th68h"]
 [ext_resource type="Script" path="res://obstacleSpawner.gd" id="3_h0pb6"]
 [ext_resource type="AudioStream" uid="uid://b43o5a7n4g0of" path="res://music/Cosmic Blood.ogg" id="5_065dd"]
+[ext_resource type="PackedScene" uid="uid://dqq6tjo8bivwt" path="res://pipeFalldown.tscn" id="5_krqcs"]
 [ext_resource type="Script" path="res://scoreScript.gd" id="5_q8uod"]
 [ext_resource type="PackedScene" uid="uid://bk8hbnqishaty" path="res://pipePickUp.tscn" id="6_6my22"]
+[ext_resource type="PackedScene" uid="uid://cl8gchoko5uw1" path="res://topProjectile1.tscn" id="6_bwigj"]
+[ext_resource type="PackedScene" uid="uid://bd1dadvlgekbu" path="res://topProjectile2.tscn" id="7_7fgb6"]
 
 [sub_resource type="Animation" id="Animation_lqusl"]
 length = 0.001
@@ -20,23 +23,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Rect2(181, 30, 90, 34)]
-}
-
-[sub_resource type="Animation" id="Animation_4iaex"]
-resource_name = "mainAnim"
-length = 0.2
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:region_rect")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [Rect2(181, 30, 90, 34), Rect2(277, 30, 89, 34)]
 }
 
 [sub_resource type="Animation" id="Animation_343wl"]
@@ -56,8 +42,8 @@ tracks/0/keys = {
 "values": [Rect2(192, 205, 76, 52), Rect2(291, 205, 72, 52)]
 }
 
-[sub_resource type="Animation" id="Animation_mpekj"]
-resource_name = "shotGun"
+[sub_resource type="Animation" id="Animation_4iaex"]
+resource_name = "mainAnim"
 length = 0.2
 loop_mode = 1
 tracks/0/type = "value"
@@ -70,7 +56,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 0.1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [Rect2(194, 138, 76, 56), Rect2(293, 138, 72, 56)]
+"values": [Rect2(181, 30, 90, 34), Rect2(277, 30, 89, 34)]
 }
 
 [sub_resource type="Animation" id="Animation_at1qe"]
@@ -88,6 +74,23 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 1,
 "values": [Rect2(178, 88, 92, 39), Rect2(276, 88, 89, 39)]
+}
+
+[sub_resource type="Animation" id="Animation_mpekj"]
+resource_name = "shotGun"
+length = 0.2
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [Rect2(194, 138, 76, 56), Rect2(293, 138, 72, 56)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_eya11"]
@@ -181,10 +184,13 @@ trail_lifetime = 0.11
 
 [node name="obstacleSpawner" type="Node2D" parent="."]
 script = ExtResource("3_h0pb6")
-timeUntilSpawn = null
+fallDownObjects = [ExtResource("5_krqcs"), ExtResource("6_bwigj"), ExtResource("7_7fgb6")]
 
 [node name="Timer" type="Timer" parent="obstacleSpawner"]
 one_shot = true
+
+[node name="Timer2" type="Timer" parent="obstacleSpawner"]
+autostart = true
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("5_065dd")
@@ -193,5 +199,9 @@ autoplay = true
 
 [node name="Area2D" parent="." instance=ExtResource("6_6my22")]
 
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(0, -150)
+
 [connection signal="timeout" from="RichTextLabel/Timer" to="RichTextLabel" method="_on_timer_timeout"]
 [connection signal="timeout" from="obstacleSpawner/Timer" to="obstacleSpawner" method="_timeout"]
+[connection signal="timeout" from="obstacleSpawner/Timer2" to="obstacleSpawner" method="_timeout_sec"]

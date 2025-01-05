@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://b43o5a7n4g0of"
+path="res://.godot/imported/Cosmic Blood.ogg-6ba6a9ab305dcc67cd34fa8f5508ead8.oggvorbisstr"
+
+[deps]
+
+source_file="res://music/Cosmic Blood.ogg"
+dest_files=["res://.godot/imported/Cosmic Blood.ogg-6ba6a9ab305dcc67cd34fa8f5508ead8.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

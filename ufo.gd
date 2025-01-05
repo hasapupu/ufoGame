@@ -5,7 +5,7 @@ class_name ufo
 @onready var explosion: PackedScene = preload("res://explosion.tscn")
 @onready var scoreMan = get_parent().get_parent().get_node("RichTextLabel") as scoreScript
 @onready var bullet: PackedScene = preload("res://enemyBullet.tscn")
-var player: CharacterBody2D
+var player: playerScript
 var limit := false
 
 func _physics_process(delta):
@@ -22,3 +22,6 @@ func _process(delta):
 func increaseScore():
     scoreMan.score += 20
 
+#func playDeathSFX():
+#    player.auPlay.stream = player.boom
+#	player.auPlay.play()

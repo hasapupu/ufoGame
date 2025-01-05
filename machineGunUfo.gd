@@ -1,4 +1,4 @@
-extends ufo
+class_name machineGunUfo extends ufo
 
 @onready var pickUp: PackedScene = preload("res://machineGunPickup.tscn")
 
@@ -16,6 +16,8 @@ func shoot():
 
 func _on_tree_exiting():
 	increaseScore()
+	player.auPlay.stream = player.boom
+	player.auPlay.play()
 	var expInst: GPUParticles2D = explosion.instantiate()
 	expInst.emitting = true
 	expInst.position = position

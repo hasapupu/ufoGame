@@ -4,6 +4,8 @@ class_name defaultUfo extends ufo
 
 func _on_tree_exiting():
     increaseScore()
+    player.auPlay.stream = player.boom
+    player.auPlay.play()
     var expInst: GPUParticles2D = explosion.instantiate()
     expInst.emitting = true
     expInst.position = position
